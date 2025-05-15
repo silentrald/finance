@@ -23,9 +23,11 @@ import "@ionic/vue/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 
+import locale from "./modules/locale";
 import logger from "./modules/logger";
 import { Capacitor } from "@capacitor/core";
 import { Platform } from "./types";
+
 import createInitializerService from "./services/initializer.service";
 import createDatabaseAppService from "./db/app.service";
 import createDatabaseWebService from "./db/web.service";
@@ -58,6 +60,9 @@ window.addEventListener("DOMContentLoaded", async () => {
   const app = createApp(App)
     .use(IonicVue)
     .use(router);
+
+  // TODO: Set in storage for the default localization
+  await locale.init(app, "en");
 
   // === Repo Setup === //
   const dbClientResult = await databaseService.open();
