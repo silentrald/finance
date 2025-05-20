@@ -2,13 +2,17 @@
 // Format: page.<misc>.label
 export default {
   transaction: {
-    header: "Transactions",
+    name: "Transactions",
 
     type: {
       e: "Expense",
       i: "Income",
       t: "Transfer",
     },
+  },
+
+  settings: {
+    name: "Settings",
   },
 };
 

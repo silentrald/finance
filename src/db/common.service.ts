@@ -20,26 +20,31 @@ export default function createDatabaseCommonService({
 }) {
   const sqliteConnection = new SQLiteConnection(CapacitorSQLite);
 
-  const shouldRetrieveConnection = async () => {
+  async function shouldRetrieveConnection() {
     const consistent = (await sqliteConnection.checkConnectionsConsistency())
       .result;
     const connection = (
       await sqliteConnection.isConnection(databaseName, READONLY)
     ).result;
     return consistent && connection;
-  };
+  }
+
+  async function getDatabase(): Promise<SQLiteDBConnection> {
+    if (await shouldRetrieveConnection()) {
+      return await sqliteConnection.retrieveConnection(databaseName, READONLY);
+    }
+
+    return await sqliteConnection.createConnection(
+      databaseName,
+      true, "encrypted",
+      databaseVersion, READONLY
+    );
+  }
 
   return {
     async open(): Promise<Result<DatabaseClient>> {
       try {
-        const db: SQLiteDBConnection = await shouldRetrieveConnection()
-          ? await sqliteConnection.retrieveConnection(databaseName, READONLY)
-          : await sqliteConnection.createConnection(
-              databaseName,
-              // TODO:
-              false, "no-encryption",
-              databaseVersion, READONLY
-            );
+        const db: SQLiteDBConnection = await getDatabase();
 
         await db.open();
         const { result: open } = await db.isDBOpen();

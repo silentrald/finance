@@ -56,7 +56,7 @@ onMounted(async () => {
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>{{ locale.t("transaction.header") }}</ion-title>
+        <ion-title>{{ locale.t("transaction.name") }}</ion-title>
       </ion-toolbar>
     </ion-header>
 
@@ -64,7 +64,7 @@ onMounted(async () => {
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">
-            {{ locale.t("transaction.header") }}
+            {{ locale.t("transaction.name") }}
           </ion-title>
         </ion-toolbar>
       </ion-header>
@@ -75,7 +75,7 @@ onMounted(async () => {
         :background-color="wallet.color"
       />
 
-      <ion-title>{{ locale.t("transaction.header") }}</ion-title>
+      <ion-title>{{ locale.t("transaction.name") }}</ion-title>
 
       <transaction-row v-for="t in transactions"
         :key="t.id"
