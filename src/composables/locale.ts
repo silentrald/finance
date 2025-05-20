@@ -15,6 +15,7 @@ export default function useLocale() {
 
   return {
     t: i18n.t,
+    n: i18n.n,
 
     async setLocale(appLocale: AppLocale) {
       return locale.set(appLocale);
